@@ -50,21 +50,18 @@
 <body class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 min-h-screen p-4">
   <div id="main-container" class="max-w-[375px] mx-auto">
     <header id="header" class="text-center mb-4">
-      <h1 class="pixel-font text-red-500 text-xl neon-text mb-2">CodeVending</h1>
+      <h1 class="pixel-font text-red-500 text-2xl neon-text mb-2">CodeVending</h1>
       <!--p class="text-white text-xs opacity-80">Support the developer!</p-->
     </header>
     <div id="vending-machine" class="vending-machine rounded-2xl p-4 relative">
-      <div id="goal-display" class="led-display rounded-lg p-3 mb-4">
+      <div id="goal-display" class="led-display rounded-lg p-3 mb-4 overflow-hidden">
         <div class="flex items-center justify-between mb-2">
-          <span class="pixel-font text-red-500 text-[8px]">GOAL</span>
+          <span class="pixel-font text-red-500 text-[8px]">GOAL: NEW KEYBOARD</span>
           <span class="pixel-font text-green-400 text-[8px] blink">$47/$150</span>
         </div>
-        <div class="w-full bg-gray-800 rounded-full h-3 overflow-hidden">
+        <div class="w-full bg-gray-800 rounded-full h-3 overflow-hidden mb-2">
           <div id="i615p" class="bg-gradient-to-r from-red-500 to-yellow-500 h-full rounded-full"></div>
         </div>
-        <p class="text-red-400 text-[7px] mt-2 pixel-font text-center">NEW KEYBOARD</p>
-      </div>
-      <div id="led-marquee" class="led-display rounded-lg p-2 mb-4 overflow-hidden">
         <div class="marquee whitespace-nowrap">
           <span class="pixel-font text-red-500 text-[8px]">
             Alex bought Pizza 🍕 · Maria got Beer 🍺 · Anon donated $5 · John bought Coffee ☕ · Sarah got Taco 🌮
@@ -124,17 +121,9 @@
       <div id="spiral-animation" class="hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <div class="w-16 h-16 border-4 border-yellow-400 rounded-full border-t-transparent spiral-spin"></div>
       </div>
-      <div id="dispenser-section" class="mb-4">
-        <div id="dispenser-placeholder" class="dispenser-door rounded-lg p-3 text-center text-gray-500">
-          <span class="pixel-font text-[8px]">TAKE YOUR ITEM</span>
-        </div>
-        <div id="dispenser-content" class="hidden dispenser-door rounded-lg p-3 text-center">
-          <div id="dispensed-item" class="text-4xl"></div>
-        </div>
-      </div>
       <div id="for-payment" class="led-display rounded-lg p-3 mb-4">
         <div class="flex items-center justify-between mb-2">
-          <span class="pixel-font text-red-500 text-[8px]">FOR PAYMENT</span>
+          <span class="pixel-font text-red-500 text-[8px]">PAYMENT</span>
           <span id="payment-amount" class="pixel-font text-red-500 text-[8px]">$ 0</span>
         </div>
       </div>

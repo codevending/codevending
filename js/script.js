@@ -170,18 +170,18 @@ window.addEventListener('load', function() {
 
       playDispense(); // Sound for dispensing
 
-      const placeholder = document.getElementById('dispenser-placeholder');
-      const span = placeholder.querySelector('span');
-      span.textContent = itemToPurchase.emoji + ' TAKE YOUR ITEM';
+      // Show item in payment display
+      forPaymentDiv.innerHTML = '<div class="flex items-center justify-center flex-col">' + itemToPurchase.emoji + '</div>';
 
       // Remove selection highlight immediately
       document.querySelectorAll('.snack-slot').forEach(s => s.classList.remove('ring-2', 'ring-yellow-400'));
 
       createConfetti();
 
-      // Reset item after some time
+      // Reset payment display and re-enable button after some time
       setTimeout(() => {
-         span.textContent = 'TAKE YOUR ITEM';
+         forPaymentDiv.innerHTML = originalHTML;
+         updatePaymentDisplay();
          insertCoinBtn.disabled = false; // Re-enable button
       }, 5000);
     }, 600);
