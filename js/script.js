@@ -62,7 +62,7 @@ window.addEventListener('load', function() {
 
   function showError(message) {
     const forPaymentDiv = document.getElementById('for-payment');
-    const originalHTML = '<div class="flex items-center justify-between mb-2"><span class="pixel-font text-red-500 text-[8px]">FOR PAYMENT</span><span id="payment-amount" class="pixel-font text-red-500 text-[8px]">$ 0</span></div>';
+    const originalHTML = '<div class="flex items-center justify-between mb-2"><span class="pixel-font text-red-500 text-[8px]">PAYMENT</span><span id="payment-amount" class="pixel-font text-red-500 text-[8px]">$ 0</span></div>';
     forPaymentDiv.innerHTML = '<div class="flex items-center justify-center"><span class="pixel-font text-red-400 text-[10px]">' + message + '</span></div>';
     setTimeout(() => {
       forPaymentDiv.innerHTML = originalHTML;
@@ -73,6 +73,10 @@ window.addEventListener('load', function() {
   document.querySelectorAll('.snack-slot').forEach(slot => {
     slot.addEventListener('click', function() {
       if (this.classList.contains('opacity-50')) return;
+
+      // Prevent selection during purchase process
+      const insertCoinBtn = document.getElementById('insert-coin-btn');
+      if (insertCoinBtn.disabled) return;
 
       playClick(); // Sound for selecting item
 
@@ -120,8 +124,10 @@ window.addEventListener('load', function() {
     });
   });
 
-  document.getElementById('insert-coin-btn').addEventListener('click', function() {
-    if (!selectedItem) {
+  const insertCoinBtn = document.getElementById('insert-coin-btn');
+
+  insertCoinBtn.addEventListener('click', function() {
+    if (!selectedItem || insertCoinBtn.disabled) {
       showError('PLEASE SELECT A SNACK FIRST!');
       return;
     }
@@ -131,7 +137,12 @@ window.addEventListener('load', function() {
       return;
     }
 
-    currentAmount -= parseFloat(selectedItem.price);
+    // Disable button and store item before processing
+    insertCoinBtn.disabled = true;
+    const itemToPurchase = selectedItem;
+    selectedItem = null; // Reset immediately
+
+    currentAmount -= parseFloat(itemToPurchase.price);
 
     playInsertCoin(); // Sound for purchase
 
@@ -139,10 +150,12 @@ window.addEventListener('load', function() {
     const activeSlot = document.querySelector('.snack-slot.ring-2.ring-yellow-400');
     if (activeSlot) {
       const fallingItem = document.createElement('div');
-      fallingItem.textContent = selectedItem.emoji;
+      fallingItem.textContent = itemToPurchase.emoji;
       fallingItem.className = 'absolute text-3xl item-fall';
-      fallingItem.style.left = activeSlot.offsetLeft + 'px';
-      fallingItem.style.top = activeSlot.offsetTop + 'px';
+      const rect = activeSlot.getBoundingClientRect();
+      const containerRect = document.getElementById('vending-machine').getBoundingClientRect();
+      fallingItem.style.left = (rect.left - containerRect.left) + 'px';
+      fallingItem.style.top = (rect.top - containerRect.top) + 'px';
       document.getElementById('vending-machine').appendChild(fallingItem);
       setTimeout(() => fallingItem.remove(), 600);
     }
@@ -159,7 +172,7 @@ window.addEventListener('load', function() {
 
       const placeholder = document.getElementById('dispenser-placeholder');
       const span = placeholder.querySelector('span');
-      span.textContent = selectedItem.emoji + ' TAKE YOUR ITEM';
+      span.textContent = itemToPurchase.emoji + ' TAKE YOUR ITEM';
 
       // Remove selection highlight immediately
       document.querySelectorAll('.snack-slot').forEach(s => s.classList.remove('ring-2', 'ring-yellow-400'));
@@ -169,7 +182,7 @@ window.addEventListener('load', function() {
       // Reset item after some time
       setTimeout(() => {
          span.textContent = 'TAKE YOUR ITEM';
-         selectedItem = null;
+         insertCoinBtn.disabled = false; // Re-enable button
       }, 5000);
     }, 600);
   });
@@ -201,7 +214,7 @@ window.addEventListener('load', function() {
       const priceDiv = lamboSlot.querySelector('.pixel-font.text-gray-400');
       priceDiv.classList.remove('text-gray-400', 'line-through');
       priceDiv.classList.add('text-red-500');
-      const soldOutDiv = lamboSlot.querySelector('.pixel-font.text-red-500.text-\\[6px\\]');
+      const soldOutDiv = lamboSlot.querySelector('.pixel-font.text-red-500.text-[6px]');
       soldOutDiv.textContent = '';
     }
   };
