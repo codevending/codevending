@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeVending</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+    window.FontAwesomeConfig = {
+      autoReplaceSvg: 'nest'
+    };
+  </script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 min-h-screen p-4">
+  <div id="main-container" class="max-w-[375px] mx-auto">
+    <header id="header" class="text-center mb-4">
+      <h1 class="pixel-font text-red-500 text-xl neon-text mb-2">CodeVending</h1>
+      <!--p class="text-white text-xs opacity-80">Support the developer!</p-->
+    </header>
+    <div id="vending-machine" class="vending-machine rounded-2xl p-4 relative">
+      <div id="goal-display" class="led-display rounded-lg p-3 mb-4">
+        <div class="flex items-center justify-between mb-2">
+          <span class="pixel-font text-red-500 text-[8px]">GOAL</span>
+          <span class="pixel-font text-green-400 text-[8px] blink">$47/$150</span>
+        </div>
+        <div class="w-full bg-gray-800 rounded-full h-3 overflow-hidden">
+          <div id="i615p" class="bg-gradient-to-r from-red-500 to-yellow-500 h-full rounded-full"></div>
+        </div>
+        <p class="text-red-400 text-[7px] mt-2 pixel-font text-center">NEW KEYBOARD</p>
+      </div>
+      <div id="led-marquee" class="led-display rounded-lg p-2 mb-4 overflow-hidden">
+        <div class="marquee whitespace-nowrap">
+          <span class="pixel-font text-red-500 text-[8px]">
+            Alex bought Pizza 🍕 · Maria got Beer 🍺 · Anon donated $5 · John bought Coffee ☕ · Sarah got Taco 🌮
+          </span>
+        </div>
+      </div>
+      <div id="glass-panel" class="glass-panel rounded-xl p-3 mb-4">
+        <div id="snack-grid" class="grid grid-cols-3 gap-2">
+          <div data-code="A1" data-price="1" class="snack-slot rounded-lg p-2 text-center cursor-pointer">
+            <div class="text-3xl mb-1">🍭</div>
+            <div class="text-white text-[8px] font-semibold">Candy</div>
+            <div class="pixel-font text-red-500 text-[7px]">$1</div>
+          </div>
+          <div data-code="A2" data-price="3" class="snack-slot rounded-lg p-2 text-center cursor-pointer">
+            <div class="text-3xl mb-1">🍦</div>
+            <div class="text-white text-[8px] font-semibold">Ice Cream</div>
+            <div class="pixel-font text-red-500 text-[7px]">$3</div>
+          </div>
+          <div data-code="A3" data-price="5" class="snack-slot rounded-lg p-2 text-center cursor-pointer">
+            <div class="text-3xl mb-1">☕️</div>
+            <div class="text-white text-[8px] font-semibold">Coffee</div>
+            <div class="pixel-font text-red-500 text-[7px]">$5</div>
+          </div>
+          <div data-code="B1" data-price="7" class="snack-slot rounded-lg p-2 text-center cursor-pointer">
+            <div class="text-3xl mb-1">🍕</div>
+            <div class="text-white text-[8px] font-semibold">Pizza</div>
+            <div class="pixel-font text-red-500 text-[7px]">$7</div>
+          </div>
+          <div data-code="B2" data-price="8" class="snack-slot rounded-lg p-2 text-center cursor-pointer">
+            <div class="text-3xl mb-1">🌮</div>
+            <div class="text-white text-[8px] font-semibold">Taco</div>
+            <div class="pixel-font text-red-500 text-[7px]">$8</div>
+          </div>
+          <div data-code="B3" data-price="10" class="snack-slot rounded-lg p-2 text-center cursor-pointer">
+            <div class="text-3xl mb-1">🍔</div>
+            <div class="text-white text-[8px] font-semibold">Burger</div>
+            <div class="pixel-font text-red-500 text-[7px]">$10</div>
+          </div>
+          <div data-code="C1" data-price="15" class="snack-slot rounded-lg p-2 text-center cursor-pointer">
+            <div class="text-3xl mb-1">🍜</div>
+            <div class="text-white text-[8px] font-semibold">Ramen</div>
+            <div class="pixel-font text-red-500 text-[7px]">$15</div>
+          </div>
+          <div data-code="C2" data-price="20" class="snack-slot rounded-lg p-2 text-center cursor-pointer">
+            <div class="text-3xl mb-1">🍱</div>
+            <div class="text-white text-[8px] font-semibold">Bento</div>
+            <div class="pixel-font text-red-500 text-[7px]">$20</div>
+          </div>
+          <div data-code="C3" data-price="50" class="snack-slot rounded-lg p-2 text-center cursor-pointer opacity-50">
+            <div class="text-3xl mb-1">🏎️</div>
+            <div class="text-white text-[8px] font-semibold">Lamborghini</div>
+            <div class="pixel-font text-gray-400 text-[7px] line-through">$50</div>
+            <div class="pixel-font text-red-500 text-[6px] mt-1">SOLD OUT</div>
+          </div>
+        </div>
+      </div>
+      <div id="spiral-animation" class="hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <div class="w-16 h-16 border-4 border-yellow-400 rounded-full border-t-transparent spiral-spin"></div>
+      </div>
+      <div id="dispenser-section" class="mb-4">
+        <div id="dispenser-placeholder" class="dispenser-door rounded-lg p-3 text-center text-gray-500">
+          <span class="pixel-font text-[8px]">TAKE YOUR ITEM</span>
+        </div>
+        <div id="dispenser-content" class="hidden dispenser-door rounded-lg p-3 text-center">
+          <div id="dispensed-item" class="text-4xl"></div>
+        </div>
+      </div>
+      <div id="for-payment" class="led-display rounded-lg p-3 mb-4">
+        <div class="flex items-center justify-between mb-2">
+          <span class="pixel-font text-red-500 text-[8px]">FOR PAYMENT</span>
+          <span id="payment-amount" class="pixel-font text-red-500 text-[8px]">$ 0</span>
+        </div>
+      </div>
+      <div id="coin-section" class="grid grid-cols-4 gap-2 mb-4">
+        <button data-amount="1" class="coin-slot rounded-lg p-3 text-center cursor-pointer pulse-glow">
+          <div class="text-yellow-400 text-2xl mb-1">💰</div>
+          <div class="pixel-font text-white text-[8px]">$1</div>
+        </button>
+        <button data-amount="5" class="coin-slot rounded-lg p-3 text-center cursor-pointer pulse-glow">
+          <div class="text-yellow-400 text-2xl mb-1">💵</div>
+          <div class="pixel-font text-white text-[8px]">$5</div>
+        </button>
+        <button data-amount="10" class="coin-slot rounded-lg p-3 text-center cursor-pointer pulse-glow">
+          <div class="text-green-400 text-2xl mb-1">💵</div>
+          <div class="pixel-font text-white text-[8px]">$10</div>
+        </button>
+        <button data-amount="20" class="coin-slot rounded-lg p-3 text-center cursor-pointer pulse-glow">
+          <div class="text-green-400 text-2xl mb-1">💸</div>
+          <div class="pixel-font text-white text-[8px]">$20</div>
+        </button>
+      </div>
+      <button id="insert-coin-btn" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-6 rounded-xl pulse-glow transition-all">
+        <div class="flex items-center justify-center gap-2">
+          <span class="pixel-font text-xs">INSERT COIN</span>
+        </div>
+      </button>
+      <div id="confetti-container" class="absolute inset-0 pointer-events-none"></div>
+    </div>
+  </div>
+  <div id="secret-code-display" class="hidden fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
+    <div class="text-center p-6">
+      <div class="text-6xl mb-4">🏎️</div>
+      <h2 class="pixel-font text-yellow-400 text-sm mb-2">SECRET UNLOCKED!</h2>
+      <p class="text-white text-xs mb-4">Lamborghini for DevOps</p>
+      <button onclick="closeSecret()" class="bg-red-600 text-white px-4 py-2 rounded-lg pixel-font text-[8px]">CLOSE</button>
+    </div>
+  </div>
+  <script src="js/script.js"></script>
+</body>
+</html>
